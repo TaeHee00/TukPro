@@ -1,11 +1,9 @@
 package com.kancth03.tukpro.domain.member.dto;
 
-import java.io.Serializable;
-
 /**
  * DTO for {@link com.kancth03.tukpro.domain.member.entity.Member}
  */
-public record SigninMemberRequest(
+public record LoginMemberRequest(
         String email,
         String password
 ) {
