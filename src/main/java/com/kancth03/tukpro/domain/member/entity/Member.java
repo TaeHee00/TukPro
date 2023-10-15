@@ -1,6 +1,7 @@
 package com.kancth03.tukpro.domain.member.entity;
 
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -9,6 +10,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Getter
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
@@ -20,10 +22,13 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
+    @Column(unique = true)
     private String email;
     private String password;
+    @Column(unique = true)
     private String name;
     @CreatedDate
+    @Column(updatable = false)
     private LocalDateTime created_at;
     @LastModifiedDate
     private LocalDateTime modified_at;
@@ -34,7 +39,7 @@ public class Member {
         this.name = name;
     }
 
-    public Member of(String email, String password, String name) {
+    public static Member of(String email, String password, String name) {
         return new Member(email, password, name);
     }
 }
