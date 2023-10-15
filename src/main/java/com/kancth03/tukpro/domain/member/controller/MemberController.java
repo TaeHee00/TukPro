@@ -17,6 +17,11 @@ public class MemberController {
         return memberService.signupMember(request);
     }
 
+    @PostMapping("/valid")
+    public ValidMessageResponse signupValid(@RequestBody SignupMemberRequest request) {
+        return memberService.signupValid(request);
+    }
+
     @PostMapping("/login")
     public LoginMemberResponse loginMember(@RequestBody LoginMemberRequest request) {
         return memberService.loginMember(request);
