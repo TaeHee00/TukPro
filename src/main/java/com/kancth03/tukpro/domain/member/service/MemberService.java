@@ -28,7 +28,7 @@ public class MemberService {
     }
 
     public ValidMessageResponse loginValid(LoginMemberRequest request) {
-        LoginValid loginValid = LoginValid.EMAIL_MISMATCH;;
+        LoginValid loginValid = LoginValid.EMAIL_MISMATCH;
         Optional<Member> findMember = memberRepository.findByEmail(request.email());
 
         if (findMember.isPresent()) {
@@ -39,5 +39,23 @@ public class MemberService {
             loginValid = LoginValid.SUCCESS;
         }
         return ValidMessageResponse.ofLogin(loginValid);
+    }
+
+    public ValidMessageResponse signupValid(SignupMemberRequest request) {
+        SignupValid signupValid;
+        Optional<Member> findEmail = memberRepository.findByEmail(request.email());
+
+        if (findEmail.isPresent()) {
+            signupValid = SignupValid.EMAIL_DUPLICATED;
+            return ValidMessageResponse.ofSignup(signupValid);
+        }
+
+        Optional<Member> findName = memberRepository.findByName(request.name());
+        if (findName.isPresent()) {
+            signupValid = SignupValid.NAME_DUPLICATED;
+            return ValidMessageResponse.ofSignup(signupValid);
+        }
+        signupValid = SignupValid.SUCCESS;
+        return ValidMessageResponse.ofSignup(signupValid);
     }
 }
